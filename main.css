@@ -1,0 +1,17 @@
+.disabled {
+  border: none;
+  color: lightgrey;
+  opacity: 0.1;
+}
+
+.current {
+  font-weight: bold;
+}
+
+.container {
+  min-width: 650px;
+}
+
+.col-12 {
+  min-height: 50px;
+}
