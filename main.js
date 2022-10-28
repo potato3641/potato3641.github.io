@@ -78,7 +78,12 @@ function mainjs(adder) {
             let clickedDay = parseInt(axiosGenerator.innerHTML)
             let formatDay = (clickedDay < 10 ? '0' : '') + clickedDay.toString()
             let foldName = todayYear.slice(-2) + todayMonth + formatDay
-            let todo = 1;
+            if (!allowedListBOJ.includes(foldName) && !allowedListSWEA.includes(foldName)) {
+              target = document.querySelector('.day-' + clickedDay.toString())
+              target.classList.remove('current')
+              target.classList.add('disabled')
+              target.style.color = 'white';
+            }
             axiosGenerator.addEventListener('click', function (e) {
               let todos = 1;
               document.querySelector('.boj-body').innerHTML = ""
@@ -118,19 +123,6 @@ function mainjs(adder) {
                   })
               }
             })
-            if (allowedListBOJ.includes(foldName)) {
-              todo *= -1;
-            }
-            if (allowedListSWEA.includes(foldName)) {
-              todo *= -1;
-            }
-            if (todo == 1) {
-              // document.querySelector('.modal-body').innerHTML = ""
-              target = document.querySelector('.day-' + clickedDay.toString())
-              target.classList.remove('current')
-              target.classList.add('disabled')
-              target.style.color = 'white';
-            }
           })
         })
     })
