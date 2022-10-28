@@ -81,6 +81,8 @@ function mainjs(adder) {
             let todo = 1;
             axiosGenerator.addEventListener('click', function (e) {
               let todos = 1;
+              document.querySelector('.boj-body').innerHTML = ""
+              document.querySelector('.swea-body').innerHTML = ""
               if (allowedListBOJ.includes(foldName)) {
                 todos *= -1;
                 axios({
@@ -88,7 +90,7 @@ function mainjs(adder) {
                   url: `https://api.github.com/repos/potato3641/algo/contents/BOJ/${foldName}`,
                 })
                   .then((response) => {
-                    target = document.querySelector('.modal-body')
+                    target = document.querySelector('.boj-body')
                     target.innerHTML = `BOJ : ${response.data.length}<br>`
                     for (pyfile of response.data) {
                       target.innerHTML += `${pyfile.name}<br>`
@@ -105,12 +107,8 @@ function mainjs(adder) {
                   url: `https://api.github.com/repos/potato3641/algo/contents/SWEA/${foldName}`,
                 })
                   .then((response) => {
-                    target = document.querySelector('.modal-body')
-                    if (todo == -1) {
-                      target.innerHTML += `BOJ : ${response.data.length}<br>`
-                    } else {
-                      target.innerHTML = `BOJ : ${response.data.length}<br>`
-                    }
+                    target = document.querySelector('.swea-body')
+                    target.innerHTML = `SWEA : ${response.data.length}<br>`
                     for (pyfile of response.data) {
                       target.innerHTML += `${pyfile.name}<br>`
                     }
