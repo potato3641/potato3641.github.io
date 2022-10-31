@@ -15,3 +15,18 @@
 .col-12 {
   min-height: 50px;
 }
+
+.nostudy.today {
+  --bs-btn-disabled-color: darkred;
+  font-weight: bold;
+  --bs-btn-disabled-opacity: 1;
+}
+
+.today {
+  --bs-btn-disabled-color: red;
+  font-weight: bold;
+}
+
+.nostudy {
+  --bs-btn-disabled-color: white;
+}

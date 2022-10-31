@@ -40,6 +40,7 @@ function mainjs(adder) {
   for (let i = 1; i <= nextDate; i++) {
     target = calender.querySelector(`.week-${(prevDay + i) % 7}`)
     target.innerHTML += '<div class="btn current col-12 day-' + i + '" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">' + i + '</div>'
+
   }
   for (let i = 1; i < (7 - nextDay == 7 ? 0 : 7 - nextDay); i++) {
     target = calender.querySelector(`.week-${nextDay + i}`)
@@ -82,7 +83,7 @@ function mainjs(adder) {
               target = document.querySelector('.day-' + clickedDay.toString())
               target.classList.remove('current')
               target.classList.add('disabled')
-              target.style.color = 'white';
+              target.classList.add('nostudy')
             }
             axiosGenerator.addEventListener('click', function (e) {
               let todos = 1;
@@ -95,10 +96,11 @@ function mainjs(adder) {
                   url: `https://api.github.com/repos/potato3641/algo/contents/BOJ/${foldName}`,
                 })
                   .then((response) => {
-                    target = document.querySelector('.boj-body')
+                    let target = document.querySelector('.boj-body')
                     target.innerHTML = `BOJ : ${response.data.length}<br>`
+                    let urlSkull = `https://raw.githubusercontent.com/potato3641/algo/master/BOJ/${foldName}/`
                     for (pyfile of response.data) {
-                      target.innerHTML += `${pyfile.name}<br>`
+                      target.innerHTML += `<a class="btn btn-default" target="_blank" href=${urlSkull+pyfile.name}>${pyfile.name}</a><br>`
                     }
                   })
                   .catch((error) => {
@@ -112,10 +114,11 @@ function mainjs(adder) {
                   url: `https://api.github.com/repos/potato3641/algo/contents/SWEA/${foldName}`,
                 })
                   .then((response) => {
-                    target = document.querySelector('.swea-body')
+                    let target = document.querySelector('.swea-body')
                     target.innerHTML = `SWEA : ${response.data.length}<br>`
+                    let urlSkull = `https://raw.githubusercontent.com/potato3641/algo/master/SWEA/${foldName}/`
                     for (pyfile of response.data) {
-                      target.innerHTML += `${pyfile.name}<br>`
+                      target.innerHTML += `<a class="btn btn-default" target="_blank" href=${urlSkull+pyfile.name}>${pyfile.name}</a><br>`
                     }
                   })
                   .catch((error) => {
