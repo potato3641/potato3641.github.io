@@ -30,3 +30,7 @@
 .nostudy {
   --bs-btn-disabled-color: white;
 }
+
+.pblink {
+  float: right;
+}

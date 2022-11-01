@@ -100,7 +100,9 @@ function mainjs(adder) {
                     target.innerHTML = `BOJ : ${response.data.length}<br>`
                     let urlSkull = `https://raw.githubusercontent.com/potato3641/algo/master/BOJ/${foldName}/`
                     for (pyfile of response.data) {
-                      target.innerHTML += `<a class="btn btn-default" target="_blank" href=${urlSkull+pyfile.name}>${pyfile.name}</a><br>`
+                      let sweaSkull = `https://www.acmicpc.net/problem/${pyfile.name.split('.')[0]}`
+                      target.innerHTML += `<a class="btn btn-default" target="_blank" href="${urlSkull+pyfile.name}">${pyfile.name}</a>`
+                      target.innerHTML += `<a class="btn text-primary pblink" target="_blank" href="${sweaSkull}">problem link</a><br>`
                     }
                   })
                   .catch((error) => {
@@ -117,8 +119,11 @@ function mainjs(adder) {
                     let target = document.querySelector('.swea-body')
                     target.innerHTML = `SWEA : ${response.data.length}<br>`
                     let urlSkull = `https://raw.githubusercontent.com/potato3641/algo/master/SWEA/${foldName}/`
+                    
                     for (pyfile of response.data) {
-                      target.innerHTML += `<a class="btn btn-default" target="_blank" href=${urlSkull+pyfile.name}>${pyfile.name}</a><br>`
+                      let sweaSkull = `https://swexpertacademy.com/main/code/problem/problemList.do?contestProbId=&problemTitle=${pyfile.name.split('.')[0]}`
+                      target.innerHTML += `<a class="btn btn-default" target="_blank" href="${urlSkull+pyfile.name}">${pyfile.name}</a>`
+                      target.innerHTML += `<a class="btn text-primary pblink" target="_blank" href="${sweaSkull}">problem link</a><br>`
                     }
                   })
                   .catch((error) => {
