@@ -10,6 +10,8 @@
 
 .container {
   min-width: 650px;
+  width: 92rem;
+  transition-duration: 0.5s;
 }
 
 .col-12 {
