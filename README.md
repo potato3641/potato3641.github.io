@@ -1,6 +1,8 @@
 # Github REST API Calendar
  - 2022.10.28 10:00 ~ 2022.10.28 14:00
  - 개인이 진행한 subject 점검용 토이 프로젝트
+ - algo 레포지토리 내용 기반 캘린더 생성
+ + 2023.01.13 Programmers 추가
 ## Subject
  - REST API 숙달
  - axios 비동기 통신 숙달
