@@ -92,7 +92,7 @@ function mainjs(adder) {
                 let clickedDay = parseInt(axiosGenerator.innerHTML)
                 let formatDay = (clickedDay < 10 ? '0' : '') + clickedDay.toString()
                 let foldName = todayYear.slice(-2) + todayMonth + formatDay
-                if (!allowedListBOJ.includes(foldName) && !allowedListSWEA.includes(foldName)) {
+                if (!allowedListBOJ.includes(foldName) && !allowedListSWEA.includes(foldName) && !allowedListPGM.includes(foldName)) {
                   target = document.querySelector('.day-' + clickedDay.toString())
                   target.classList.remove('current')
                   target.classList.add('disabled')
@@ -122,6 +122,7 @@ function mainjs(adder) {
                         console.log(error.response)
                       })
                   }
+                  todos = 1;
                   if (allowedListSWEA.includes(foldName)) {
                     todos *= -1;
                     axios({
@@ -143,6 +144,7 @@ function mainjs(adder) {
                         console.log(error.response)
                       })
                   }
+                  todos = 1;
                   if (allowedListPGM.includes(foldName)) {
                     todos *= -1;
                     axios({
