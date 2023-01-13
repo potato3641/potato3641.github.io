@@ -48,7 +48,8 @@ function mainjs(adder) {
   }
   let allowedListBOJ = [];
   let allowedListSWEA = [];
-  calList = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  let allowedListPGM = [];
+  let calList = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   document.querySelector('.monthYearText').innerHTML = `${calList[endDay.getMonth()]} ${endDay.getFullYear()}`
   axios({
     method: 'get',
@@ -74,64 +75,98 @@ function mainjs(adder) {
           }
         })
         .then((response) => {
-          let axiosGenerators = document.querySelectorAll('.current')
-          axiosGenerators.forEach((axiosGenerator) => {
-            let clickedDay = parseInt(axiosGenerator.innerHTML)
-            let formatDay = (clickedDay < 10 ? '0' : '') + clickedDay.toString()
-            let foldName = todayYear.slice(-2) + todayMonth + formatDay
-            if (!allowedListBOJ.includes(foldName) && !allowedListSWEA.includes(foldName)) {
-              target = document.querySelector('.day-' + clickedDay.toString())
-              target.classList.remove('current')
-              target.classList.add('disabled')
-              target.classList.add('nostudy')
-            }
-            axiosGenerator.addEventListener('click', function (e) {
-              let todos = 1;
-              document.querySelector('.boj-body').innerHTML = ""
-              document.querySelector('.swea-body').innerHTML = ""
-              if (allowedListBOJ.includes(foldName)) {
-                todos *= -1;
-                axios({
-                  method: 'get',
-                  url: `https://api.github.com/repos/potato3641/algo/contents/BOJ/${foldName}`,
-                })
-                  .then((response) => {
-                    let target = document.querySelector('.boj-body')
-                    target.innerHTML = `BOJ : ${response.data.length}<br>`
-                    let urlSkull = `https://raw.githubusercontent.com/potato3641/algo/master/BOJ/${foldName}/`
-                    for (pyfile of response.data) {
-                      let sweaSkull = `https://www.acmicpc.net/problem/${pyfile.name.split('.')[0]}`
-                      target.innerHTML += `<a class="btn btn-default" target="_blank" href="${urlSkull+pyfile.name}">${pyfile.name}</a>`
-                      target.innerHTML += `<a class="btn text-primary pblink" target="_blank" href="${sweaSkull}">problem link</a><br>`
-                    }
-                  })
-                  .catch((error) => {
-                    console.log(error.response)
-                  })
-              }
-              if (allowedListSWEA.includes(foldName)) {
-                todos *= -1;
-                axios({
-                  method: 'get',
-                  url: `https://api.github.com/repos/potato3641/algo/contents/SWEA/${foldName}`,
-                })
-                  .then((response) => {
-                    let target = document.querySelector('.swea-body')
-                    target.innerHTML = `SWEA : ${response.data.length}<br>`
-                    let urlSkull = `https://raw.githubusercontent.com/potato3641/algo/master/SWEA/${foldName}/`
-                    
-                    for (pyfile of response.data) {
-                      let sweaSkull = `https://swexpertacademy.com/main/code/problem/problemList.do?contestProbId=&problemTitle=${pyfile.name.split('.')[0]}`
-                      target.innerHTML += `<a class="btn btn-default" target="_blank" href="${urlSkull+pyfile.name}">${pyfile.name}</a>`
-                      target.innerHTML += `<a class="btn text-primary pblink" target="_blank" href="${sweaSkull}">problem link</a><br>`
-                    }
-                  })
-                  .catch((error) => {
-                    console.log(error.response)
-                  })
+          axios({
+            method: 'get',
+            url: `https://api.github.com/repos/potato3641/algo/contents/PGM`,
+          })
+            .then((response) => {
+              for (fileorfold of response.data) {
+                if (fileorfold.type == 'dir') {
+                  allowedListPGM.push(fileorfold.name)
+                }
               }
             })
-          })
+            .then((response) => {
+              let axiosGenerators = document.querySelectorAll('.current')
+              axiosGenerators.forEach((axiosGenerator) => {
+                let clickedDay = parseInt(axiosGenerator.innerHTML)
+                let formatDay = (clickedDay < 10 ? '0' : '') + clickedDay.toString()
+                let foldName = todayYear.slice(-2) + todayMonth + formatDay
+                if (!allowedListBOJ.includes(foldName) && !allowedListSWEA.includes(foldName)) {
+                  target = document.querySelector('.day-' + clickedDay.toString())
+                  target.classList.remove('current')
+                  target.classList.add('disabled')
+                  target.classList.add('nostudy')
+                }
+                axiosGenerator.addEventListener('click', function (e) {
+                  let todos = 1;
+                  document.querySelector('.boj-body').innerHTML = ""
+                  document.querySelector('.swea-body').innerHTML = ""
+                  if (allowedListBOJ.includes(foldName)) {
+                    todos *= -1;
+                    axios({
+                      method: 'get',
+                      url: `https://api.github.com/repos/potato3641/algo/contents/BOJ/${foldName}`,
+                    })
+                      .then((response) => {
+                        let target = document.querySelector('.boj-body')
+                        target.innerHTML = `BOJ : ${response.data.length}<br>`
+                        let urlSkull = `https://raw.githubusercontent.com/potato3641/algo/master/BOJ/${foldName}/`
+                        for (pyfile of response.data) {
+                          let sweaSkull = `https://www.acmicpc.net/problem/${pyfile.name.split('.')[0]}`
+                          target.innerHTML += `<a class="btn btn-default" target="_blank" href="${urlSkull + pyfile.name}">${pyfile.name}</a>`
+                          target.innerHTML += `<a class="btn text-primary pblink" target="_blank" href="${sweaSkull}">problem link</a><br>`
+                        }
+                      })
+                      .catch((error) => {
+                        console.log(error.response)
+                      })
+                  }
+                  if (allowedListSWEA.includes(foldName)) {
+                    todos *= -1;
+                    axios({
+                      method: 'get',
+                      url: `https://api.github.com/repos/potato3641/algo/contents/SWEA/${foldName}`,
+                    })
+                      .then((response) => {
+                        let target = document.querySelector('.swea-body')
+                        target.innerHTML = `SWEA : ${response.data.length}<br>`
+                        let urlSkull = `https://raw.githubusercontent.com/potato3641/algo/master/SWEA/${foldName}/`
+
+                        for (pyfile of response.data) {
+                          let sweaSkull = `https://swexpertacademy.com/main/code/problem/problemList.do?contestProbId=&problemTitle=${pyfile.name.split('.')[0]}`
+                          target.innerHTML += `<a class="btn btn-default" target="_blank" href="${urlSkull + pyfile.name}">${pyfile.name}</a>`
+                          target.innerHTML += `<a class="btn text-primary pblink" target="_blank" href="${sweaSkull}">problem link</a><br>`
+                        }
+                      })
+                      .catch((error) => {
+                        console.log(error.response)
+                      })
+                  }
+                  if (allowedListPGM.includes(foldName)) {
+                    todos *= -1;
+                    axios({
+                      method: 'get',
+                      url: `https://api.github.com/repos/potato3641/algo/contents/PGM/${foldName}`,
+                    })
+                      .then((response) => {
+                        let target = document.querySelector('.pgm-body')
+                        target.innerHTML = `PGM : ${response.data.length}<br>`
+                        let urlSkull = `https://raw.githubusercontent.com/potato3641/algo/master/PGM/${foldName}/`
+
+                        for (pyfile of response.data) {
+                          let sweaSkull = `https://school.programmers.co.kr/learn/courses/30/lessons/${pyfile.name.split('.')[0]}`
+                          target.innerHTML += `<a class="btn btn-default" target="_blank" href="${urlSkull + pyfile.name}">${pyfile.name}</a>`
+                          target.innerHTML += `<a class="btn text-primary pblink" target="_blank" href="${sweaSkull}">problem link</a><br>`
+                        }
+                      })
+                      .catch((error) => {
+                        console.log(error.response)
+                      })
+                  }
+                })
+              })
+            })
         })
     })
 }
