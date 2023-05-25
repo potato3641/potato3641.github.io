@@ -102,6 +102,7 @@ function mainjs(adder) {
                   let todos = 1;
                   document.querySelector('.boj-body').innerHTML = ""
                   document.querySelector('.swea-body').innerHTML = ""
+                  document.querySelector('.pgm-body').innerHTML = ""
                   if (allowedListBOJ.includes(foldName)) {
                     todos *= -1;
                     axios({
